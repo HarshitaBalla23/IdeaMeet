@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.checked {
+  color: orange;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {margin: 0 -5px;}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive columns */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  background-color: #f1f1f1;
+}
+
+/*Headers search*/
+/* Style the header */
+.header {
+  background-color: #f44336;
+  padding: 30px 40px;
+  color: white;
+  text-align: center;
+}
+
+/* Clear floats after the header */
+.header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the input */
+input {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  width: 75%;
+  padding: 10px;
+  float: left;
+  font-size: 16px;
+}
+
+/* Style the "Add" button */
+.addBtn {
+  padding: 10px;
+  width: 25%;
+  background: #d9d9d9;
+  color: #555;
+  float: left;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 0;
+}
+
+.addBtn:hover {
+  background-color: #bbb;
+}
+
+
+/*Popup*/
+
+/* Popup container */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* The actual popup (appears on top) */
+.popup .popuptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+
+</style>
+</head>
+<body>
+
+  <div id="myDIV" class="header">
+    <h2 style="margin:5px">Add the Idea</h2>
+    <input type="text" id="myInput" placeholder="Proposal Title...">
+    <span onclick="createNewIdea()" class="addBtn">Add</span>
+  </div>
+
+
+<div class="row" id="root">
+ 
+ <!--<div class="column">
+    <span class="fa fa-window-close-o" onclick="removeThisElement(this)">10</span>
+    <div class="card"> 
+      <h3>Card 2</h3>
+      <span class="fa fa-thumbs-o-up" onclick="increaseVote(this)">10</span>
+      <p class="fa fa-thumbs-o-down" onclick="increaseVote(this)">20</p>
+    </div>
+  </div>--> 
+  
+</div>
+<script>
+
+  function getNodeElementWithClass(documentRoot, htmlElementName , className){
+    var nodeElement =  document.createElement(htmlElementName);
+    nodeElement.classList.add(className);
+    documentRoot.appendChild(nodeElement);
+    return nodeElement;
+  }
+
+
+  function getNodeElementWithText(documentRoot, htmlElementName , textContent){
+    var nodeElement =  document.createElement(htmlElementName);
+    nodeElement.innerHTML = textContent;
+    documentRoot.appendChild(nodeElement);
+    return nodeElement;
+  }
+
+  function initializeValues(element,voteType){
+    element.classList.add(voteType);
+    element.innerText="0 ";
+    element.addEventListener("click",function(){increaseVote(this)});
+  }
+
+  function createNewIdea(){
+    let root  = document.querySelector(".row");
+    let tagText = new String (document.querySelector("#myInput").value);
+    if(tagText.length >0){
+    let divRow = getNodeElementWithClass(root,"div","column");
+    let divCard = getNodeElementWithClass(divRow,"div","card");
+    
+    //Added New code to remove
+    let spanRemove = getNodeElementWithClass(divCard,"span","fa");
+    spanRemove.classList.add("fa-window-close-o");
+    spanRemove.addEventListener("click",function(){removeThisElement(this)});
+    
+    let HTag = getNodeElementWithText(divCard,"H3",tagText);
+    let spanUpVoteTag = getNodeElementWithClass(divCard,"span","fa");
+    initializeValues(spanUpVoteTag,"fa-thumbs-o-up");
+    let spanDownVoteTag = getNodeElementWithClass(divCard,"p","fa");
+    initializeValues(spanDownVoteTag,"fa-thumbs-o-down");
+    }
+    else{
+      createAlert(document.querySelector("#root"),"Please Enter Idea");
+    }
+  }
+
+  function increaseVote(element){
+    element.innerText = Number(element.innerText)+1;
+  }
+
+
+  function createAlert(element,text){
+    alert("Please enter Idea");
+  }
+
+
+  function removeThisElement(element){
+    let root  = document.querySelector(".row");
+    let node = element.parentNode.parentNode;
+    root.removeChild(node);
+  }
+
+</script>
+</body>
+</html>
