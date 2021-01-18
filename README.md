@@ -10,3 +10,11 @@ A project where team members can meet and share ideas and vote for each of them
 
 ![alt text](https://github.com/HarshitaBalla23/IdeaMeet/blob/main/tempsnip.png?raw=true)
 
+
+The folder ideasMeet has the Express implmentation. To start the project please follow below steps:-
+1. git clone the project 
+2. Make sure you have node installed in your system
+3. Open command prompt in windows or shell in linux 
+4. Change to directory of ideasmeet.
+5. Exexute the command SET DEBUG=ideasmeet:* & npm start
+
