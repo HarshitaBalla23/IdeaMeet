@@ -8,3 +8,5 @@ A project where team members can meet and share ideas and vote for each of them
 3. The users can also delete ideas.
 4. Also has additional validations.
 
+![alt text](https://github.com/HarshitaBalla23/IdeaMeet/blob/main/tempsnip.png?raw=true)
+
