@@ -53,7 +53,7 @@ body {
 /*Headers search*/
 /* Style the header */
 .header {
-  background-color: #f44336;
+  background-color: #555;
   padding: 30px 40px;
   color: white;
   text-align: center;
@@ -151,10 +151,54 @@ input {
   to {opacity:1 ;}
 }
 
+.navbar {
+  height: 100%;
+  width: 47px;
+  position: fixed;
+  z-index: 1;
+  background-color: #555;
+  overflow: auto;
+}
+
+.navbar a {
+  float: left;
+  padding: 12px;
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background-color: #000;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+
+@media screen and (max-width: 500px) {
+  .navbar a {
+    float: none;
+    display: block;
+  }
+}
+
+.main {
+  margin-left: 37px; /* Same as the width of the sidenav */
+  padding: 0px 10px;
+}
 </style>
 </head>
 <body>
 
+  <div class="navbar">
+    <a class="active" href="HomePage.html"><i class="fa fa-fw fa-home"></i></a> 
+    <a href="#"><i class="fa fa-fw fa-search"></i></a> 
+    <a href="#"><i class="fa fa-fw fa-envelope"></i></a> 
+    <a href="#"><i class="fa fa-fw fa-user"></i></a>
+  </div>
+
+<div class="main">
   <div id="myDIV" class="header">
     <h2 style="margin:5px">Add the Idea</h2>
     <input type="text" id="myInput" placeholder="Proposal Title...">
@@ -173,6 +217,7 @@ input {
     </div>
   </div>--> 
   
+</div>
 </div>
 <script>
 
@@ -201,6 +246,7 @@ input {
     let root  = document.querySelector(".row");
     let tagText = new String (document.querySelector("#myInput").value);
     if(tagText.length >0){
+    storeIdea(tagText);
     let divRow = getNodeElementWithClass(root,"div","column");
     let divCard = getNodeElementWithClass(divRow,"div","card");
     
@@ -235,6 +281,21 @@ input {
     let node = element.parentNode.parentNode;
     root.removeChild(node);
   }
+
+
+  function storeIdea(idea) {
+            console.log("Loading all idea from Database");
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(xhttp.responseText)
+                }
+            };
+
+            xhttp.open("POST", "http://localhost:8080/idea/store", true);
+            xhttp.send(idea);
+
+        }
 
 </script>
 </body>
